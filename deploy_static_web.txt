@@ -1,0 +1,14 @@
+Small Project:
+
+git clone - https://github.com/bedimcode/portfolio-responsive-complete.git
+cd /home/ubuntu/portfolio-responsive-complete
+Build image and Host static web using docker container
+
+Dockerfile:
+FROM nginx
+COPY . /usr/share/nginx/html
+
+docker build -t myweb .
+docker run -d --name mywebcontainer -p 80:80 mywebimg
+
+Search Public Ip Address of EC2 instance
