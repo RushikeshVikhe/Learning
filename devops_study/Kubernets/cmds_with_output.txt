@@ -1,0 +1,507 @@
+Commands with outputs:
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME       READY   STATUS    RESTARTS       AGE
+delhipod   1/1     Running   0              46s
+testpod3   3/3     Running   3 (5m5s ago)   20h
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods -o wide
+NAME       READY   STATUS    RESTARTS        AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+delhipod   1/1     Running   0               70s   10.244.0.9   minikube   <none>           <none>
+testpod3   3/3     Running   3 (5m29s ago)   20h   10.244.0.7   minikube   <none>           <none>
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods --show-labels
+NAME       READY   STATUS    RESTARTS        AGE     LABELS
+delhipod   1/1     Running   0               2m54s   class=pods,env=development
+testpod3   3/3     Running   3 (7m13s ago)   20h     <none>
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl label pods delhipod myname=Rushikesh
+pod/delhipod labeled
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods -l myname=Rushikesh
+NAME       READY   STATUS    RESTARTS   AGE
+delhipod   1/1     Running   0          19m
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods -l myname!=Rushikesh
+NAME       READY   STATUS    RESTARTS      AGE
+testpod3   3/3     Running   3 (25m ago)   20h
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl delete pods -l env=development
+pod "delhipod" deleted
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods -l 'env in(development, testing)'
+NAME       READY   STATUS    RESTARTS   AGE
+delhipod   1/1     Running   0          97s
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods -l 'env notin (development, testing)'
+NAME       READY   STATUS    RESTARTS      AGE
+testpod3   3/3     Running   3 (36m ago)   20h
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods -l class=pods,love=devops
+NAME       READY   STATUS    RESTARTS   AGE
+delhipod   1/1     Running   0          11m
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl delete pods -l 'env in(development,testing)'
+pod "delhipod" deleted
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl label nodes minikube hardware=t2-medium
+node/minikube labeled
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl label node minikube hardware-
+node/minikube unlabeled
+
+
+Replication Controller:
+root@ip-172-31-46-17:/home/ubuntu# kubectl describe rc myreplica
+Name:         myreplica
+Namespace:    default
+Selector:     myname=Bhupinder
+Labels:       myname=Bhupinder
+Annotations:  <none>
+Replicas:     5 current / 5 desired
+Pods Status:  3 Running / 2 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  myname=Bhupinder
+  Containers:
+   c00:
+    Image:      ubuntu
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      /bin/bash
+      -c
+      while true; do echo Hello-Bhupinder; sleep 5 ; done
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Events:
+  Type    Reason            Age    From                    Message
+  ----    ------            ----   ----                    -------
+  Normal  SuccessfulCreate  3m45s  replication-controller  Created pod: myreplica-mth72
+  Normal  SuccessfulCreate  3m45s  replication-controller  Created pod: myreplica-6zxs2
+  Normal  SuccessfulCreate  4s     replication-controller  Created pod: myreplica-ls44f
+  Normal  SuccessfulCreate  4s     replication-controller  Created pod: myreplica-l2lzk
+  Normal  SuccessfulCreate  4s     replication-controller  Created pod: myreplica-5pdpc
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME              READY   STATUS    RESTARTS      AGE
+myreplica-5pdpc   1/1     Running   0             66s
+myreplica-6zxs2   1/1     Running   0             4m47s
+myreplica-l2lzk   1/1     Running   0             66s
+myreplica-ls44f   1/1     Running   0             66s
+myreplica-mth72   1/1     Running   0             4m47s
+nodelabels        1/1     Running   0             29m
+testpod3          3/3     Running   3 (96m ago)   21h
+root@ip-172-31-46-17:/home/ubuntu# kubectl delete pod myreplica-5pdpc
+pod "myreplica-5pdpc" deleted
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME              READY   STATUS    RESTARTS      AGE
+myreplica-6zxs2   1/1     Running   0             5m56s
+myreplica-hd89g   1/1     Running   0             33s
+myreplica-l2lzk   1/1     Running   0             2m15s
+myreplica-ls44f   1/1     Running   0             2m15s
+myreplica-mth72   1/1     Running   0             5m56s
+nodelabels        1/1     Running   0             31m
+testpod3          3/3     Running   3 (97m ago)   21h
+root@ip-172-31-46-17:/home/ubuntu# 
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl describe rc myreplica
+Name:         myreplica
+Namespace:    default
+Selector:     myname=Bhupinder
+Labels:       myname=Bhupinder
+Annotations:  <none>
+Replicas:     5 current / 5 desired
+Pods Status:  5 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  myname=Bhupinder
+  Containers:
+   c00:
+    Image:      ubuntu
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      /bin/bash
+      -c
+      while true; do echo Hello-Bhupinder; sleep 5 ; done
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Events:
+  Type    Reason            Age    From                    Message
+  ----    ------            ----   ----                    -------
+  Normal  SuccessfulCreate  8m16s  replication-controller  Created pod: myreplica-mth72
+  Normal  SuccessfulCreate  8m16s  replication-controller  Created pod: myreplica-6zxs2
+  Normal  SuccessfulCreate  4m35s  replication-controller  Created pod: myreplica-ls44f
+  Normal  SuccessfulCreate  4m35s  replication-controller  Created pod: myreplica-l2lzk
+  Normal  SuccessfulCreate  4m35s  replication-controller  Created pod: myreplica-5pdpc
+  Normal  SuccessfulCreate  2m53s  replication-controller  Created pod: myreplica-hd89g
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods --show-labels
+NAME              READY   STATUS    RESTARTS       AGE     LABELS
+myreplica-6zxs2   1/1     Running   0              9m30s   myname=Bhupinder
+myreplica-hd89g   1/1     Running   0              4m7s    myname=Bhupinder
+myreplica-l2lzk   1/1     Running   0              5m49s   myname=Bhupinder
+myreplica-ls44f   1/1     Running   0              5m49s   myname=Bhupinder
+myreplica-mth72   1/1     Running   0              9m30s   myname=Bhupinder
+nodelabels        1/1     Running   0              34m     env=development
+testpod3          3/3     Running   3 (100m ago)   21h     <none>
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl scale --replicas=8 rc -l myname=Bhupinder
+replicationcontroller/myreplica scaled
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME              READY   STATUS         RESTARTS        AGE
+myreplica-56fpp   1/1     Running        0               7s
+myreplica-5l9cg   1/1     Running        0               7s
+myreplica-g2kxk   1/1     Running        0               7s
+myreplica-hd89g   1/1     Running        1 (2m22s ago)   63m
+myreplica-l2lzk   1/1     Running        1 (2m22s ago)   65m
+myreplica-ls44f   1/1     Running        1 (2m22s ago)   65m
+myreplica-mth72   1/1     Running        1 (2m22s ago)   69m
+myreplica-rq6mk   1/1     Running        1 (2m22s ago)   57m
+nodelabels        0/1     NodeAffinity   0               94m
+testpod3          3/3     Running        6 (2m22s ago)   22h
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl scale --replicas=4 rc -l myname=Bhupinder
+replicationcontroller/myreplica scaled
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME              READY   STATUS         RESTARTS       AGE
+myreplica-56fpp   1/1     Terminating    0              50s
+myreplica-5l9cg   1/1     Terminating    0              50s
+myreplica-g2kxk   1/1     Terminating    0              50s
+myreplica-hd89g   1/1     Terminating    1 (3m5s ago)   64m
+myreplica-l2lzk   1/1     Running        1 (3m5s ago)   66m
+myreplica-ls44f   1/1     Running        1 (3m5s ago)   66m
+myreplica-mth72   1/1     Running        1 (3m5s ago)   70m
+myreplica-rq6mk   1/1     Running        1 (3m5s ago)   58m
+nodelabels        0/1     NodeAffinity   0              95m
+testpod3          3/3     Running        6 (3m5s ago)   22h
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME              READY   STATUS         RESTARTS        AGE
+myreplica-l2lzk   1/1     Running        1 (3m55s ago)   67m
+myreplica-ls44f   1/1     Running        1 (3m55s ago)   67m
+myreplica-mth72   1/1     Running        1 (3m55s ago)   70m
+myreplica-rq6mk   1/1     Running        1 (3m55s ago)   59m
+nodelabels        0/1     NodeAffinity   0               96m
+testpod3          3/3     Running        6 (3m55s ago)   22h
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods --show-labels
+NAME              READY   STATUS         RESTARTS        AGE   LABELS
+myreplica-l2lzk   1/1     Running        1 (5m15s ago)   68m   myname=Bhupinder
+myreplica-ls44f   1/1     Running        1 (5m15s ago)   68m   myname=Bhupinder
+myreplica-mth72   1/1     Running        1 (5m15s ago)   72m   myname=Bhupinder
+myreplica-rq6mk   1/1     Running        1 (5m15s ago)   60m   myname=Bhupinder
+nodelabels        0/1     NodeAffinity   0               97m   env=development
+testpod3          3/3     Running        6 (5m15s ago)   22h   <none>
+root@ip-172-31-46-17:/home/ubuntu# 
+
+
+Relica Set:
+root@ip-172-31-46-17:/home/ubuntu# kubectl get rs
+NAME                       DESIRED   CURRENT   READY   AGE
+myrs   4         4         4       7m41s
+root@ip-172-31-46-17:/home/ubuntu# kubectl get rc
+NAME        DESIRED   CURRENT   READY   AGE
+myreplica   4         4         4       77m
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods --show-labels
+NAME              READY   STATUS         RESTARTS      AGE     LABELS
+myreplica-mth72   1/1     Running        1 (18m ago)   85m     myname=Bhupinder
+myrs-fvdc7        1/1     Running        0             8m13s   myname=Bhupinder
+myrs-k9ppl        1/1     Running        0             8m13s   myname=Bhupinder
+nodelabels        0/1     NodeAffinity   0             110m    env=development
+testpod3          3/3     Running        6 (18m ago)   22h     <none>
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl scale --replicas=1 rs/myrs
+replicaset.apps/myrs scaled
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods --show-labels
+NAME              READY   STATUS         RESTARTS      AGE     LABELS
+myreplica-mth72   1/1     Running        1 (23m ago)   90m     myname=Bhupinder
+myrs-49rtb        1/1     Terminating    0             4m33s   myname=Bhupinder
+myrs-fvdc7        1/1     Terminating    0             13m     myname=Bhupinder
+myrs-k9ppl        1/1     Running        0             13m     myname=Bhupinder
+nodelabels        0/1     NodeAffinity   0             115m    env=development
+testpod3          3/3     Running        6 (23m ago)   23h     <none>
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl scale --replicas=5 rs/myrs
+replicaset.apps/myrs scaled
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods --show-labels
+NAME              READY   STATUS              RESTARTS      AGE    LABELS
+myreplica-mth72   1/1     Running             1 (24m ago)   91m    myname=Bhupinder
+myrs-2nvrg        1/1     Running             0             7s     myname=Bhupinder
+myrs-5bqg4        0/1     ContainerCreating   0             7s     myname=Bhupinder
+myrs-k9ppl        1/1     Running             0             14m    myname=Bhupinder
+myrs-zhvqj        1/1     Running             0             7s     myname=Bhupinder
+myrs-zqbzq        0/1     ContainerCreating   0             7s     myname=Bhupinder
+nodelabels        0/1     NodeAffinity        0             116m   env=development
+testpod3          3/3     Running             6 (24m ago)   23h    <none>
+root@ip-172-31-46-17:/home/ubuntu# 
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME              READY   STATUS         RESTARTS      AGE
+myreplica-mth72   1/1     Running        1 (25m ago)   92m
+myrs-2nvrg        1/1     Running        0             100s
+myrs-5bqg4        1/1     Running        0             100s
+myrs-k9ppl        1/1     Running        0             15m
+myrs-zhvqj        1/1     Running        0             100s
+myrs-zqbzq        1/1     Running        0             100s
+nodelabels        0/1     NodeAffinity   0             118m
+testpod3          3/3     Running        6 (25m ago)   23h
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl delete rs/myrs
+replicaset.apps "myrs" deleted
+root@ip-172-31-46-17:/home/ubuntu# kubectl get rc
+NAME        DESIRED   CURRENT   READY   AGE
+myreplica   1         1         1       93m
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME              READY   STATUS         RESTARTS      AGE
+myreplica-mth72   1/1     Running        1 (27m ago)   94m
+nodelabels        0/1     NodeAffinity   0             119m
+testpod3          3/3     Running        6 (27m ago)   23h
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods --show-labels
+NAME              READY   STATUS         RESTARTS      AGE    LABELS
+myreplica-mth72   1/1     Running        1 (27m ago)   94m    myname=Bhupinder
+nodelabels        0/1     NodeAffinity   0             119m   env=development
+testpod3          3/3     Running        6 (27m ago)   23h    <none>
+root@ip-172-31-46-17:/home/ubuntu# kubectl get rc
+NAME        DESIRED   CURRENT   READY   AGE
+myreplica   1         1         1       94m
+root@ip-172-31-46-17:/home/ubuntu# 
+
+
+Deployment Object:
+root@ip-172-31-46-17:/home/ubuntu# kubectl get deploy
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+mydeployments   2/2     2            2           71s
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl describe deploy mydeployments
+Name:                   mydeployments
+Namespace:              default
+CreationTimestamp:      Sun, 10 Dec 2023 08:41:51 +0000
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               name=deployment
+Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  name=deployment
+  Containers:
+   c00:
+    Image:      ubuntu
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      /bin/bash
+      -c
+      while true; do echo Technical-Guftgu; sleep 5; done
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   mydeployments-64c9b975b7 (2/2 replicas created)
+Events:
+  Type    Reason             Age    From                   Message
+  ----    ------             ----   ----                   -------
+  Normal  ScalingReplicaSet  2m40s  deployment-controller  Scaled up replica set mydeployments-64c9b975b7 to 2
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl get rs
+NAME                       DESIRED   CURRENT   READY   AGE
+mydeployments-64c9b975b7   4         4         4       7m41s
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME                             READY   STATUS         RESTARTS      AGE
+mydeployments-64c9b975b7-ms99x   1/1     Running        0             4m13s
+mydeployments-64c9b975b7-p9h7j   1/1     Running        0             4m13s
+myreplica-mth72                  1/1     Running        1 (42m ago)   109m
+nodelabels                       0/1     NodeAffinity   0             134m
+testpod3                         3/3     Running        6 (42m ago)   23h
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl exec mydeployments-7ff486c4b8-hvpz7 --  cat /etc/os-release
+NAME="CentOS Linux"
+VERSION="8"
+ID="centos"
+ID_LIKE="rhel fedora"
+VERSION_ID="8"
+PLATFORM_ID="platform:el8"
+PRETTY_NAME="CentOS Linux 8"
+ANSI_COLOR="0;31"
+CPE_NAME="cpe:/o:centos:centos:8"
+HOME_URL="https://centos.org/"
+BUG_REPORT_URL="https://bugs.centos.org/"
+CENTOS_MANTISBT_PROJECT="CentOS-8"
+CENTOS_MANTISBT_PROJECT_VERSION="8"
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl rollout status deployment mydeployments
+deployment "mydeployments" successfully rolled out
+root@ip-172-31-46-17:/home/ubuntu# 
+root@ip-172-31-46-17:/home/ubuntu# kubectl rollout history deployment mydeployments
+deployment.apps/mydeployments 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl rollout undo deploy/mydeployments
+deployment.apps/mydeployments rolled back
+
+root@ip-172-31-46-17:/home/ubuntu# kubectl exec mydeployments-64c9b975b7-8kwp8 --  cat /etc/os-release
+PRETTY_NAME="Ubuntu 22.04.3 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.3 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+root@ip-172-31-46-17:/home/ubuntu#
+
+
+Apache Server: Access container from another container throught 80 number port
+root@ip-172-31-46-17:/home/ubuntu# kubectl exec apc  -it -c c00 -- /bin/bash
+root@apc:/# apt update && apt install curl
+Get:1 http://archive.ubuntu.com/ubuntu jammy InRelease [270 kB]
+Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:3 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1036 kB]
+Get:4 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]
+Get:5 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [109 kB]
+Get:6 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [17.5 MB]
+Get:7 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [44.0 kB]
+Get:8 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1282 kB]
+
+root@apc:/# curl localhost:80
+<html><body><h1>It works!</h1></body></html>
+
+
+
+
+
+
+communication betweent to containers of same pods:
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods
+NAME                             READY   STATUS         RESTARTS        AGE
+con1                             1/1     Running        9 (6m31s ago)   23m
+con2                             1/1     Running        4 (7s ago)      53s
+mydeployments-7ff486c4b8-cwgkg   1/1     Running        1 (46m ago)     27h
+myreplica-mth72                  1/1     Running        2 (46m ago)     30h
+nodelabels                       0/1     NodeAffinity   0               30h
+testpod                          2/2     Running        0               42m
+testpod3                         3/3     Running        9 (46m ago)     2d3h
+root@ip-172-31-46-17:/home/ubuntu# kubectl get pods -o wide
+NAME                             READY   STATUS         RESTARTS        AGE    IP            NODE       NOMINATED NODE   READINESS GATES
+con1                             1/1     Running        9 (6m58s ago)   23m    10.244.0.84   minikube   <none>           <none>
+con2                             1/1     Running        4 (34s ago)     80s    10.244.0.87   minikube   <none>           <none>
+mydeployments-7ff486c4b8-cwgkg   1/1     Running        1 (46m ago)     27h    10.244.0.76   minikube   <none>           <none>
+myreplica-mth72                  1/1     Running        2 (46m ago)     30h    10.244.0.78   minikube   <none>           <none>
+nodelabels                       0/1     NodeAffinity   0               30h    <none>        minikube   <none>           <none>
+testpod                          2/2     Running        0               42m    10.244.0.79   minikube   <none>           <none>
+testpod3                         3/3     Running        9 (46m ago)     2d4h   10.244.0.74   minikube   <none>           <none>
+root@ip-172-31-46-17:/home/ubuntu# 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Persistant Volume :
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl apply -f psv.yml
+persistentvolume/myebsvol created
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl get pv
+NAME       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
+myebsvol   1Gi        RWO            Recycle          Available                                   43s
+root@ip-172-31-9-113:/home/ubuntu/devops#
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl apply -f psvclaim.yml
+persistentvolumeclaim/myebsvolclaim created
+root@ip-172-31-9-113:/home/ubuntu/devops#
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl get pvc
+NAME            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+myebsvolclaim   Bound    pvc-de490908-ec97-422f-bce0-b09c5443c4ee   1Gi        RWO            standard       34s
+root@ip-172-31-9-113:/home/ubuntu/devops#
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl apply -f deploypsvclaim.yml
+deployment.apps/pvdeploy created
+root@ip-172-31-9-113:/home/ubuntu/devops#
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl get deploy
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+pvdeploy        1/1     1            1           3m19s
+root@ip-172-31-9-113:/home/ubuntu/devops#
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl get rs
+NAME                       DESIRED   CURRENT   READY   AGE
+mydeployments-685f595fb8   1         1         1       47h  -> prev file not related to persistent volume
+pvdeploy-797cccb7dd        1         1         1       5m12s 
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl get pods
+NAME                             READY   STATUS    RESTARTS      AGE
+mydeployments-685f595fb8-bvzjq   1/1     Running   1 (14m ago)   47h
+pvdeploy-797cccb7dd-pbnzj        1/1     Running   0             5m37s
+testpod1                         1/1     Running   1 (14m ago)   47h
+testpod2                         1/1     Running   1 (14m ago)   47h
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl exec pvdeploy-797cccb7dd-pbnzj -it -- /bin/bash
+[root@pvdeploy-797cccb7dd-pbnzj /]# ll
+bash: ll: command not found
+[root@pvdeploy-797cccb7dd-pbnzj /]# pwd
+/
+[root@pvdeploy-797cccb7dd-pbnzj /]# ls
+bin  dev  etc  home  lib  lib64  lost+found  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+[root@pvdeploy-797cccb7dd-pbnzj /]# cd /tmp/persistent
+[root@pvdeploy-797cccb7dd-pbnzj persistent]# vi test_psv
+[root@pvdeploy-797cccb7dd-pbnzj persistent]# ls
+test_psv
+[root@pvdeploy-797cccb7dd-pbnzj persistent]# exit
+exit
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl delete pod pvdeploy-797cccb7dd-pbnzj
+pod "pvdeploy-797cccb7dd-pbnzj" deleted
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl get pods
+NAME                             READY   STATUS    RESTARTS      AGE
+mydeployments-685f595fb8-bvzjq   1/1     Running   1 (18m ago)   47h
+pvdeploy-797cccb7dd-dm95c        1/1     Running   0             35s
+testpod1                         1/1     Running   1 (18m ago)   47h
+testpod2                         1/1     Running   1 (18m ago)   47h
+root@ip-172-31-9-113:/home/ubuntu/devops# kubectl exec pvdeploy-797cccb7dd-dm95c -it -- /bin/bash
+[root@pvdeploy-797cccb7dd-dm95c /]# cd /tmp/persistent/
+[root@pvdeploy-797cccb7dd-dm95c persistent]# ;;
+bash: syntax error near unexpected token `;;'
+[root@pvdeploy-797cccb7dd-dm95c persistent]# ll
+bash: ll: command not found
+[root@pvdeploy-797cccb7dd-dm95c persistent]# ls
+test_psv
+[root@pvdeploy-797cccb7dd-dm95c persistent]#
+
+

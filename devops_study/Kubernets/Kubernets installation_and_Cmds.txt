@@ -1,0 +1,41 @@
+1)install docker first ->2)Download kubernetes from this - >https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+3)minikube- > https://minikube.sigs.k8s.io/docs/start/
+
+4)apt install conntrack
+5)minikube start --vm-driver=none
+
+
+INSTALL using below COMMANDS:
+sudo apt-get update
+sudo apt install docker.io
+sudo snap install docker
+docker --version
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+which kubectl
+kubectl version
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+minikube start --force --driver=docker
+mimikube status
+apt install conntrack
+kubectl version
+kubeclt get nodes 
+kubectl describe node node_name
+
+vi pod1.yml
+kubectl apply -f pod1.yml
+
+kubectl get pods
+kubectl get pods -o wide   -> to know pods ipaddress
+kubectl describe pod testpod     
+kubectl logs -f pod_name -> go inside container to know what are going inside container(THIS CMD IF ONLY 1 CONTAINER IS THERE inside pod)
+kubectl logs -f pod_name -c container_name  ->THIS CMD IF MULTIPLE CONTAINER IS THERE)
+kubectl delete pod pod_name -> only pod deleted not the yml file
+kubectl exec pod_name -c container_name -- hostname -i 
+kubectl exec pod_name -it -c container_name -- /bin/bash  -> go inside container
+kubectl delete -f pod_name.yml ->delete file

@@ -1,0 +1,124 @@
+1)install docker first ->2)Download kubernetes from this - >https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl
+3)minikube- > https://minikube.sigs.k8s.io/docs/start/
+
+4)apt install conntrack
+5)minikube start --vm-driver=none
+
+
+INSTALL using below COMMANDS:
+sudo apt-get update
+sudo apt install docker.io
+sudo snap install docker
+docker --version
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+which kubectl
+kubectl version
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+minikube start --force --driver=docker
+mimikube status
+apt install conntrack
+kubectl version
+kubeclt get nodes 
+kubectl describe node node_name
+
+vi pod1.yml
+kubectl apply -f pod1.yml
+
+kubectl get pods
+kubectl get pods -o wide   -> to know pods ipaddress
+kubectl describe pod testpod     
+kubectl logs -f pod_name -> go inside container to know what are going inside container(THIS CMD IF ONLY 1 CONTAINER IS THERE inside pod)
+kubectl logs -f pod_name -c container_name  ->THIS CMD IF MULTIPLE CONTAINER IS THERE)
+kubectl delete pod pod_name -> only pod deleted not the yml file
+kubectl exec pod_name -c container_name -- hostname -i 
+kubectl exec pod_name -it -c container_name -- /bin/bash  -> go inside container
+kubectl delete -f pod_name.yml ->delete file
+
+Imperative and declarative Methods-
+Imperative methods -> use cmds to do work 
+declarative methods-> write yml files to do work
+Labels:
+
+Labels on pods:
+kubectl get pods --show-labels
+Imperative method: using cmd we can give labels->
+kubectl label pods pod_name label=value   ->  example- kubectl label pods delhipod myname=Rushikesh
+kubectl get pods -l myname=Rushikesh     -> find pods that have myname=Rushikesh label
+kubectl get pods -l myname!=Rushikesh    -> find finds that does not have myname=Rushikesh label
+kubectl delete pods -l env=development  -> delete pods which have env=development label
+kubectl get pods -l 'label_name in(value1, value2)'   example - kubectl get pods -l 'env in(development, testing)'   -> show pods which have this two values(multiple Labels)
+kubectl get pods -l 'env notin (development, testing)'
+kubectl get pods -l class=pods,love=devops  -> show Pods which have this two labels
+kubectl delete pods -l 'env in(development,testing)' -> delete pods which have anyone of this value
+
+Node Selector: Lables on node
+nodeSelector values and labels should be same
+
+Example -
+nodeSelector:                                         
+       hardware: t2-medium -> mentioned in yml file
+Then Create label for this-> kubectl label nodes node_name hardware=t2-medium
+	   
+kubectl describe pods nodelabels	   
+kubectl label nodes node_name label_name=value   -> give label to node which we mentioned in node selector in yml file
+kubectl label nodes minikube label_name-      -> Unlabel / delete the label given to node
+
+Replication controller: If pods deleted of failed it creates new
+kubectl describe rc replica_name
+kubectl scale --replicas=8 rc -l label=value -> scaling of replica, increase or decrease number of pods using label
+
+
+Replica Set:supports equality-based as well as set-based selector
+kubectl get rs
+kubectl scale --replicas=3 rs/replica_set_name  example - kubectl delete rs/myrs(mentioned in yml file)
+kubectl get pods
+kubectl get pods --show-labels
+kubectl delete rs/replica_set_name
+
+Deployement: rollout can be achieved by using this
+kubectl get deploy
+kubectl describe deploy deployment_name  -> example - kubectl describe deploy mydeployments
+kubectl get rs
+kubectl get pods
+kubectl scale --replicas=4 deploy deployment_name
+kubectl logs -f deployment_name  -> what going inside deployment container
+kubectl exec deployment_name --  cat /etc/os-release
+kubectl rollout status deployment deployment_name  --> status of rollout
+kubectl rollout history deployment deployment_name
+kubectl rollout undo deploy/deployment_name  -->back to previous version if we make any changes
+
+
+
+Apache: Access container from another container throught 80 number port/communicate two containers of same pod
+kubectl exec apc  -it -c c00 -- /bin/bash -> go inside the container
+apt update && apt install curl -- download curl package inside container
+curl localhost:80
+
+
+
+
+
+Persistant Volume :
+kubectl get pv     ...Persistant volume 
+kubectl get pvc    ...Persistant Volume Claim
+kubectl get deploy
+
+
+ConfigMap:
+create file sample.conf
+kubectl create configmap mymap --from-file=sample.conf ................>mymap -> (object_name, not have underscore) 
+kubectl get configmap
+kubeclt describe configmap mymap
+create pod and mention this object name in that pods yml file
+go in the path of pods which mentioned in the yml file and see the sample.conf is present there
+
+kubectl create secret generic mysecrete --from-file=file1.txt --from-file=file2.txt   --->mysecrete ->object name
+
+
+
