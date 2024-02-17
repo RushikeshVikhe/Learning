@@ -1,0 +1,57 @@
+Cluster IP Pracicle:
+
+Deployment yaml- deploy.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: httpd-container
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+		
+		
+kubectl apply -f deploy.yaml
+kubectl get deployment
+kubectl get pods
+kubectl get pods -o wide
+kubectl exec -it pod-name -- sh
+curl pod-ip:80
+
+service yaml - serv.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 9376
+      targetPort: 80
+
+
+kubectl apply -f serv.yaml
+kubectl get svc
+kubectl exec -it pod-name -- sh
+curl service-ip:9376
+curl service-name:9376
+
+Access from local machine using port forwording
+kubectl port-forward service/service-name 9378:80
+
+
+	  
