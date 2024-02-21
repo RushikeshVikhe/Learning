@@ -1,5 +1,5 @@
 NodePort Service Practical:
-
+Check labels should be same
 
 deployement yaml:
 
