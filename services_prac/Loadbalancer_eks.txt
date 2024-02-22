@@ -1,0 +1,111 @@
+Load Balancer service:
+
+Using load balancer we can access applicaion externally
+For LoadBalancer service we need the cloud provider , so we can create loadbalancer service using eks cluster 
+
+1)Install AWS CLI v2
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install unzip
+unzip awscliv2.zip
+sudo ./aws/install -i /usr/local/aws-cli -b /usr/local/bin --update
+aws configure
+
+2)Install Docker
+sudo apt-get update
+sudo apt install docker.io
+docker ps
+sudo chown $USER /var/run/docker.sock
+
+3)Install kubectl
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin
+kubectl version --short --client
+
+4)Install eksctl
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+
+5)Setup EKS Cluster
+eksctl create cluster --name kube-prac --region ap-south-1 --node-type t2.medium --nodes-min 2 --nodes-max 2
+aws eks update-kubeconfig --region ap-south-1 --name kube-prac
+kubectl get nodes
+
+deployement yaml:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployement
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: httpd-container
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+		
+
+LoadBalancer yaml:
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
+~                     
+
+
+kubectl apply -f deployement.yaml
+kubectl apply -f service.yaml
+kubectl get deployment
+kubectl get service
+Serch external ip of loadbalancer service in browser example(wait 1-2 minutes to set it will work) - a19bfd11e36b3496ea798b0d08d5bba3-956205982.ap-south-1.elb.amazonaws.com
+or curl -L a19bfd11e36b3496ea798b0d08d5bba3-1877788084.ap-south-1.elb.amazonaws.com
+to see on which node the pods created - 1)kubectl get nodes 2)kubectl get pods -o wide
+
+
+1)When we create Load balancer service then nodeport service also created. to get the port number of nodeport->
+root@ip-172-31-10-64:/home/ubuntu/prac# kubectl get svc
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP                                                                PORT(S)        AGE
+kubernetes   ClusterIP      10.100.0.1      <none>                                                                     443/TCP        147m
+my-service   LoadBalancer   10.100.31.224   a19bfd11e36b3496ea798b0d08d5bba3-1877788084.ap-south-1.elb.amazonaws.com   80:30007/TCP   130m
+root@ip-172-31-10-64:/home/ubuntu/prac# 
+
+
+2)see the PORT(S) column -> showing 80:30007 so port is 30007   (nodeport service ports should be between - 30000-32767)
+
+To access the application in the eks cluster:
+kubectl get nodes -o wide   ....to get external_ip
+
+By this command you will get EXTERNAL-IP   
+
+curl -L EXTERNAL-IP:nodeport
+
+
+3)Also you have to access the application inside pod then -
+kubectl get pods -o wide
+kubectl exec -it pod-name -- sh
+curl -L pod-ip or curl -L node:nodeport
+
+
+
+
+
+
