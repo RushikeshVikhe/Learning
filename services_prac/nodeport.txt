@@ -1,6 +1,8 @@
 NodePort Service Practical:
 Check labels should be same
 
+Range of nodeport service ports- 30000-32767
+
 deployement yaml:
 
 apiVersion: apps/v1
