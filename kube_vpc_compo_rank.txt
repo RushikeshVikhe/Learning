@@ -1,0 +1,26 @@
+Regions->
+VPC->
+Route53(not sure is it here)->
+Internet gateway->
+Public subnet(presents in different availability zones)->
+Load Balancer->
+Taget groups->
+Route tables->
+NACL->(at subnet level)->
+Private subnet(presents in different availability zones)-->
+Security group->(ec2, instance level)
+Master Nodes(Ec2)->
+Nodes(Ec2)->
+Amazon cli->
+Namespace(collections of all belows)
+eks cluster->
+LoadBalancer(service)
+Ingresss
+Kuberenetes cluster
+NodePort(service)->
+ClusterIp(service)->
+Deployment
+Replica set
+Pods
+container(made from images)
+applications(code)

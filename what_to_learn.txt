@@ -1,0 +1,25 @@
+Devops-
+git, github,linux,Docker, kubernetes,Jenkins, ansible, terraform,Maven, Monitoring tools(prometheus, nagios any one), helm, 
+sonarqube(basics), vmware, create vms,circleci(basics only)
+
+Aws Cloud:
+VPC - internet gatway, CIDR,NACL, natgateway, public subnet, private subnet, security groups, target groups, network interfaces, route tables etc(all componentes in vpc)
+Route53
+EC2
+S3,EBS
+RDS, Relational database
+Load Balancer(all types)
+EKS
+ECR
+ECS
+Amazon fargate
+Cloud Watch
+Amazon autoscaling
+AWS Policies, rules etc
+Cost optimization in aws most imp- how to do in less cost
+Amazon IAM
+Lambda
+cloudformation
+dynamodb(basics)
+
+Others - Shell scripts, linux, database (sql or oracle), android
