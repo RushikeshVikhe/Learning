@@ -2,11 +2,11 @@ Regions->
 VPC->
 Route53(not sure is it here)->
 Internet gateway->
-Public subnet(presents in different availability zones)->
 Load Balancer->
 Taget groups->
 Route tables->
 NACL->(at subnet level)->
+Public subnet(presents in different availability zones)->
 Private subnet(presents in different availability zones)-->
 Security group->(ec2, instance level)
 Master Nodes(Ec2)->
