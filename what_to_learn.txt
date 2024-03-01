@@ -22,4 +22,4 @@ Lambda
 cloudformation
 dynamodb(basics)
 
-Others - Shell scripts, linux, database (sql or oracle), android
+Others - Seven layes of osi, all important ports, Shell scripts, linux, database (sql or oracle), android
