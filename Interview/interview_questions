@@ -1,0 +1,308 @@
+MOST IMP - DO practice of 1 scenario based question everyday, do practically if possible if not possible then find solution and make list of questions and answers of such questions
+
+
+1)Must Read devops scenario based questions- https://medium.com/@azizulmaqsud/devops-real-time-interview-questionnaire-along-with-the-best-answers-a4ca48dcad50
+2)Must Read devops scenario based questions- https://medium.com/@Techie1/devops-real-time-scenarios-part-1-edf2d298e2ef
+
+Most important - Project scenario, security, issues in production, what is role in all tools?
+
+
+
+Interview 1:
+Link - https://www.youtube.com/watch?v=DJF0JLvf5Ok
+which branching strategy you used in git?
+how types of conflicts you get in git?
+what is cicd?
+write sample jenkins file and explain?
+what is docker?
+difference between ADD and COPY in docker? which is good to used?
+difference between ENTRYPOINT and CMD?
+what is dockerfile?
+write dockerfile and explain?
+How to go inside the container?
+explain kubernetes architecture?
+what is docker swarm?
+difference between kubernetes and docker swarm?
+Which services you used in aws?
+It is possible to recover last private key?
+what you do if you loss the key(private key)?
+How you connect your private subnet with the public subnet?
+types of permission in linux?
+how to check running process in linux?
+how to check ram uses or available in linux(cmd)?
+
+
+Interview 2:
+https://www.youtube.com/watch?v=4EmBd4UbPfs
+Introduction
+difference between ci and cd?
+we have to create pipeline in jenkins which have 10 different stages and based on input need to execute stage not every stage?
+difference between ansible playbook and ansible role? have to created
+when to use playbook and when to role?
+what is docker home path/home directory when you install docker?
+you are trigering dockerfile execution using the jenkins pipeline , yesterday its starting fine but today its fail? but if you check server space it is ok, but still it showing space issue?
+write docker file?
+difference between entrypoint and cmd?
+explain architecture of kubernetes and components?
+can we deploy container in the controller plane?how?
+types of services in kubernetes?
+how to do?->i have to create 2 server in aws in both the machine i want internet, server 1 is open for everone, server 2 not open for everone, if anyone wants to connect to server 2, need to connect server 1 and then server 1 connects to server2?
+is it possible to run any virtual machine in aws without connecting to vpc
+i am connecting using pem file to login to server and i lost my pem file, but i want to use the data from server?
+what is purpose of route table?
+explain any 3 policies in route53?
+what is geolocation routing?
+difference between vertical and horizontal autoscaling?
+is it possible to configure communication between two servers in aws those are having only private attachments?
+
+
+
+Interview 3:seen upto 5 minutes
+https://www.youtube.com/watch?v=7yLmfyGpWfU&list=PLjHnA84niff78nO_6RzJ8gb66rvZc2KEq&index=2
+developer not able to login the server how you troubleshoot the issue?
+what is 127.0.0.1?
+characteristics of public and private subnets?
+on which services you have experiance?
+how much experiance you have on python?
+what is cloudfront?
+questions on cloudfront?
+types of loadbalancer?
+difference between 3 loadbalancer?
+what is use of target group?
+if we want to encrypt the traffic in the node level? At time - 13:00
+do you have any experiance i kineses stream?
+Do you have experiance in terraform share screen and write code? At time 16
+difference between operating system and container?
+do you have experiance creating dockerfile?
+difference between cmd and entrypoint?
+suppose python application is running on linux box ec2 instance, application connected to database mongob inside the container , i dont want to use any service, how you establish the connectionn between application and database?
+rate yourself kubernetes?
+explain architecture of kubernetes?
+write deployment or manifest file? scenario is given? at time 34(see this one)
+difference types of service?
+which serice is secure to use?
+have experiance you on ingress? nginx ingress, alb ingress
+difference between label and annotation?
+what is pod affinity and node affinity? how you define it?
+how shift traffic from 1 node to another node? there is pod a and pod b? at time 44
+experiance in jenkins?
+what are stages in cicd pipeline?
+what is artifact, artifactory something not sure?
+you work on any testing tools?
+how you create master slave architecture on jenkins?how to make slave of master?
+have experiance on deployment strategies?
+rate on linux?
+how to get running process?
+cpu utilization report from last one hour how can i get ?
+tell me some 20 linux cmds?
+awk cmd?
+
+
+Interview 4:
+https://www.youtube.com/watch?v=HpX6_hdB3a0&list=PLjHnA84niff78nO_6RzJ8gb66rvZc2KEq&index=3
+Introduction
+How good you in lambda?
+difference between s3 and interface gateway?
+nat gateway scenario questions? at time 5
+types of nat gateway?
+familier with ansible and terraform?
+i need to copy the file from working machine(node) to my local machine where i executing my playbook , so what module you used in ansible?
+if i want to copy the same file from one location to another location on worker node? how to do
+while writing ansible file i need to pick the ip adresses of nodes , what  is module or parameter we need to include?
+what is use of providers like terraform?
+what is use of state file in terraform?
+what is use of null resource in terraform?
+in ansible any playbook you written?
+what is playbook?
+which monitoring tools you used?
+how you set the alerting system?
+what you done in monitoring?
+how we are going to specify the resouce location and compose in compose file?
+have ideas about nagios?
+i have swarm cluster with some 3 managers and 5 workers, i need to deploy one of the service in worker number 4 only? how you specify?
+i need to dockerfile after one the image was build, while executing it the docker image should run as non-root user? At time 21
+wwhat exactly cmd to in dockerfile?
+how can we use the dockerfile with another dockerfile .... at time 22-25 see
+cmd for i need to get ip adress attached to the dns name?
+have any experiance on load balancer?
+why we use HA proxy?
+what algorithm we use in HA proxy?
+what is your team size in devops?
+what is your role in devops?
+what is your project and what is you role in that?
+questions on project? at time 31
+what namespace do in kubernetes?
+difference between the hardlinks and softlinks?
+what was swap space?
+how to achive the autoscaling in kubernetes?
+difference between continuous deployment and continuous integretion?
+what was branching strategies you used in your organization?
+i need to take clone of 1 repo but in repository i have 3 branches, i need to take a clone particular branch on my local machine, how can we do that?
+difference between git fetch and git pull?
+difference between active and pachive checking idos?
+what types databases used?
+if i want to lock a terraform state file, you can we lock it?
+if i want to get the docker logs on grafana dashboard? logs of pods on grafana?
+
+Interview 5:
+https://www.youtube.com/watch?v=VKXIH_eJHgM&list=PLjHnA84niff78nO_6RzJ8gb66rvZc2KEq&index=6
+Introduction
+What is your role in your current project?
+experiance on programmin language?
+questions on array? at time 3
+What you done in shel scripting?
+questions at time 4 , scenario upto 4-8
+explain Syntax of dockerfile?
+what is expose and what is use of expose?
+we have to explicitly write expose inside our docker image? at time 9
+what is use of publish?
+tell me docker run cmd? what is -p , fullform of p , -p is publish
+what is volume in docker?
+what the mount actually it does?
+scenario at 14
+do you know how to write jenkins file?
+what is choice parameter?
+do you know the parameter in jenkins
+inf cmd in the jenkins file?
+integration of jenkins with sso?
+what is slave in jenkins?
+what is kube-config file?
+scenario at time 19-22 must see?
+what is pods?
+what is containard? containerD
+what kind of daatabase kubernetes uses?
+what is etcd? what type of database it is?
+difference between configmap and secrete?
+when i use secrete it means it already encrypted? not encrypted then what secrete do actually?
+scenario at time 24
+hashicorp vault scenario at 26 see must
+do you know what is concept is init container?
+what is persistant volume and how it is different from docker volume?
+claim from where, from where this persistant volume comming from?
+what is concept of storage class in ebs?
+
+
+
+Interview 6:
+https://www.youtube.com/watch?v=RuXjaZEAgVk&list=PLjHnA84niff78nO_6RzJ8gb66rvZc2KEq&index=5
+Introduction
+difference between git fetch and git pull
+how to create branch in your existing project
+how you revert commit
+questions on azure
+difference between feacher branching and release branching
+how agile methodology differ from devops?
+how you automate testing in devops lifecycle
+tell some importants devops kps
+postmortem meeting in devops(Devops postmortem meeting)?
+some repetative issues comming, how your team coordinating how we can eliminate it in future you discuss or not?
+difference between continuos integration and continuos delivery?
+ansible playbook and adhoc cmds?
+done grafana and prometheus?
+advantages and disadvantages of grafana and prometheus?
+how can have backup for grafana dashboard?
+it is possible to use grafana with prometheus?
+how does aws grafana works?
+scenario at time 14:30
+most importants responsibility of devops engineer
+scenario 18: upto end see must
+
+
+Interview 7: total scenario based
+https://www.youtube.com/watch?v=WtvXdT8Jt14&list=PLjHnA84niff78nO_6RzJ8gb66rvZc2KEq&index=7
+deployment strategy?
+how you scan image?
+sonarqube questions?
+scp cmd
+apim manage server
+
+
+
+prepare this first most importants questions->  What is your role in jenkins, kubernetes, ansible, terraform
+
+
+Interview 8:
+https://www.youtube.com/watch?v=m6XRdktDCyk&list=PLjHnA84niff78nO_6RzJ8gb66rvZc2KEq&index=8
+Expain current project? which services are you using in project
+you have 5 vpcs and we have to connect this onpremises?
+transit gateway?
+difference bwtn security grp and NACL?
+you have ec2 instance you telnet to instace but you are unable to connect to instace?
+firewalls knowledge?
+i want block outbound traffic in vpc?
+what is stateless and stateful in security grps?
+scenario at time 8
+if you have s3 bucket in one account and another s3 bucket in another account, if you want to replicate all object from one bucket to another , how to do it?
+what you know in IAM?
+experiance with infrastructure tools?
+scenario 13:30 upto 20
+used any terraform functions?
+what is your role in jenkins?
+which type of pipeline you used?explain declarative pipeline
+purpose of agent?
+build a docker image in delcarative pipeline how you can do it?
+complex docker file that you work?
+what is size of your image? at time 24
+why you chose ubuntu as a base image
+where you store this images?
+how you run this images?
+knowledge in kubernetes?
+what is deployment and service?see video from 30 to 42 minutes
+
+
+
+
+https://www.youtube.com/watch?v=DJF0JLvf5Ok
+0:00 introduce yourself
+02:14 what is branching strategy in git ? which git branching strategy you are using?
+04:40 explain what kinds of conflicts you get and how you resolve them?
+06:25 Can you explain what is CICD ?
+08:07  do you have knowledge on writing jenkinsfile? and can you write sample jenkins file and explain it?
+13:12 how to schedule builds in jenkins?
+14:49 what is docker?
+15:23 what is the difference between ADD and COPY?
+17:01 difference between ENTRYPOINT and CMD?
+18:49 what is dockerfile?
+19:58 can you write sample dokerfile and explain it?
+23:03 how to go inside the running container?
+24:04 explain kubernetes architecture?
+28:14 what is the difference between kubernetes and docker swarm?
+30:26 Is it possible to recover your lost private key ?
+32:30 How can you connect your EC2 Instance if you lost your key?
+34:03 How you can connect a private subnet with a public subnet ?
+34:32 How many types of permissions are there ? What is chmod ?
+36:33 Command to check running process ?
+36:52 Other than Ps do we have any other command?
+37:25 What is the Command to check RAM usage?
+39:02 do you have any questions for me?
+
+
+
+
+Others:
+When we have branches in github, what is compare and pull request in github?
+Storage gateway?
+fargate?
+what is connection draining? whay does it do?
+what is image pull policy
+difference between deployment and demonsets?
+types of sequeal and nosequeal databases?
+problems faced by you in projects? devops ,aws
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

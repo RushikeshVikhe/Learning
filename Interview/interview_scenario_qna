@@ -1,0 +1,58 @@
+Question 1:
+i need to take clone of 1 repo but in repository i have 3 branches, i need to take a clone particular branch on my local machine, how can we do that?
+Answer - 
+git clone -b <branch> <remote_repo_url>
+Example:
+
+git clone -b my-branch git@github.com:user/myproject.git
+With Git 1.7.10 and later, add --single-branch to prevent fetching of all branches. Example, with OpenCV 2.4 branch:
+
+git clone -b opencv-2.4 --single-branch https://github.com/Itseez/opencv.git
+
+
+Question 2:
+Encryption vs encoding - https://www.geeksforgeeks.org/difference-between-encryption-and-encoding/
+Secrets are used to store sensitive information, like passwords or keys.
+They’re similar to ConfigMaps, except that they’re stored in an encoded format.
+Secrets are not encrypted. They’re only encoded, meaning anyone can look up the file that you created for Secrets, or get the secret object and then decode it using different methods available.
+practicele example - https://prathapreddy-mudium.medium.com/kubernetes-explained-encrypting-secret-data-at-rest-9004ef8bb449
+
+Question 3:
+claim from where, from where this persistant volume comming from?
+https://kamsjec.medium.com/kubernetes-persistent-volumes-and-persistent-volume-claim-5148338120e4
+
+
+Question 4:
+if you have s3 bucket in one account and another s3 bucket in another account, if you want to replicate all object from one bucket to another, how to do it?
+Copying objects from one bucket to another in the same account is simple. You must log in to AWS CLI using the Account credentials and create two buckets in the same account. Upload objects in one bucket, and for copying them to the other target bucket in the same account, run the following command:
+aws s3 sync s3://SOURCE_BUCKET_Name s3://DESTINATION_BUCKET_name
+However, copying objects across S3 from one account to another is quite tedious. The entire process is described in the below diagram/below link.
+Install aws cli on ec2 instance:
+use- aws configure to configure credentials
+aws s3 ls    .....cmd to get list of all s3 buckets
+aws s3 sync s3://SOURCE_BUCKET_Name s3://DESTINATION_BUCKET_name
+other way to replicate in same account- https://www.geeksforgeeks.org/amazon-s3-cross-region-replication/
+
+S3 Replication — Same-region or cross-region, must enable versioning
+Answer - https://www.cloudthat.com/resources/blog/easy-steps-for-aws-s3-cross-account-replication#:~:text=Step%201%2D%20Create%20a%20Source,the%20data%20is%20being%20replicated.
+s3 bucket aws-cli cmds-https://docs.aws.amazon.com/cli/latest/userguide/cli-services-s3-commands.html
+
+Question 5:
+How to push new branch you created in local repo to remote repo in github?
+First we need to create the branch at remote repo then we use the below cmd to push-
+git push --set-upstream origin <branch_name>
+
+
+Question 6:
+How to host static website on amazon s3?
+
+expain how to deploy 3 or 4 tier application explain?
+if you have three tier or four tier application how can you secure the application? 
+secuirty things we have to do as devops engineer?for security of application
+how you can encrypt the data or secure data
+server side encryption and client side encryption?
+
+
+
+
+
